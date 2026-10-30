@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật STK SpaceStation 1-Click</title>
+    <style>
+        .btn {
+            padding: 15px 25px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            color: white;
+        }
+
+        
+
+        .tcb { background-color: #E30613; } /* Techcombank */
+    </style>
+</head>
+
+<body>
+    <h2>Chọn tài khoản muốn chuyển đổi:</h2>
+
+    <!-- Các nút thiết lập sẵn 1 click -->
+    <button class="btn tcb" onclick="updateBank('TCB', '19074918002019', 'NGUYEN QUOC HUNG')">
+        Chuyển sang Techcombank
+    </button>
+
+    <p id="status"></p>
+
+    <script>
+        async function updateBank(bankName, accountNumber, accountName) {
+            document.getElementById('status').innerText = 'Đang xử lý...';
+
+            const res = await fetch('/api/change-bank', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({bankName, accountNumber, accountName})
+            });
+
+            const result = await res.json();
+            document.getElementById('status').innerText = result.message;
+        }
+    </script>
+</body>
+
+</html>
